@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<f:view>
+    <h:body>
+        <div>
+            <h:link outcome="padaliniai.xhtml">Padaliniai</h:link>
+            <h:link outcome="projektai.xhtml">Projektai</h:link>
+        </div>
+
+        <h1>Darbuotojai</h1>
+
+        <br/>
+
+        <h:dataTable value="#{darbuotojasUseCase.allWorkers}" var="Darbuotojas" border="1">
+            <h:column>
+                <f:facet name="header">
+                    id
+                </f:facet>
+                #{Darbuotojas.id}
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    vardas
+                </f:facet>
+                #{Darbuotojas.vardas}
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    pavarde
+                </f:facet>
+                <h:link value="#{Darbuotojas.pavarde}" outcome="projectsOfWorker?workerId=#{Darbuotojas.id}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    padalinys
+                </f:facet>
+                #{Darbuotojas.padalinys.id}
+            </h:column>
+        </h:dataTable>
+
+        <br/>
+
+        <h:form>
+            <h:inputText value="#{darbuotojasUseCase.darbuotojas.vardas}" placeholder="Vardas" />
+
+            <h:inputText value="#{darbuotojasUseCase.darbuotojas.pavarde}" rendered="true" placeholder="Pavardė"/>
+
+            <h:selectOneMenu value="#{darbuotojasUseCase.selectedDivisionId}">
+                <f:selectItems value="#{padalinysUseCase.allDivisions}" var="division"
+                               itemValue="#{division.id}" itemLabel="#{division.pavadinimas}" />
+            </h:selectOneMenu>
+
+            <h:commandButton value="Submit" actionListener="#{darbuotojasUseCase.createDarbuotojas()}" action="index?faces-redirect=true"/>
+        </h:form>
+    </h:body>
+</f:view>
+</html>

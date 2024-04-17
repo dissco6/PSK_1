@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<f:view>
+    <div>
+        <h:link outcome="index.xhtml">Darbuotojai</h:link>
+        <h:link outcome="padaliniai.xhtml">Padaliniai</h:link>
+        <h:link outcome="projektai.xhtml">Projektai</h:link>
+    </div>
+    <H1>Darbuotojui <i>#{projektasUseCase.worker.vardas} #{projektasUseCase.worker.pavarde}</i> priskirti projektai</H1>
+
+    <h:dataTable value="#{projektasUseCase.worker.projektai}" var="Projektas" border="1">
+        <h:column>
+            <f:facet name="header">
+                id
+            </f:facet>
+            #{Projektas.id}
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                aprasas
+            </f:facet>
+            <h:link value="#{Projektas.aprasas}" outcome="workersOfProject?projectId=#{Projektas.id}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                deadline
+            </f:facet>
+            #{Projektas.deadline}
+        </h:column>
+    </h:dataTable>
+
+    <h4>Priskirti <i>#{projektasUseCase.worker.vardas} #{projektasUseCase.worker.pavarde}</i> projektą:</h4>
+
+    <h:form>
+        <h:selectOneMenu value="#{projektasUseCase.selectedProjectId}">
+            <f:selectItems value="#{projektasUseCase.allProjects}" var="project"
+                           itemValue="#{project.id}" itemLabel="#{project.id} #{project.aprasas}" />
+        </h:selectOneMenu>
+
+        <h:commandButton value="Submit" actionListener="#{projektasUseCase.addProjectToWorker(projektasUseCase.worker.id)}" action="#{'projectsOfWorker?faces-redirect=true&amp;workerId='.concat(projektasUseCase.worker.id)}">
+            <f:param name="workerId" value="#{projektasUseCase.worker.id}"/>
+        </h:commandButton>
+    </h:form>
+</f:view>
+</html>

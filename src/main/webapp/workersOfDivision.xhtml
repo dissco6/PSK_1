@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<f:view>
+    <div>
+        <h:link outcome="index.xhtml">Darbuotojai</h:link>
+        <h:link outcome="padaliniai.xhtml">Padaliniai</h:link>
+        <h:link outcome="projektai.xhtml">Projektai</h:link>
+    </div>
+    <H1>Padalinio "#{darbuotojasUseCase.division.pavadinimas}" darbuotojai</H1>
+
+    <h:dataTable value="#{darbuotojasUseCase.division.darbuotojai}" var="Darbuotojas" border="1">
+        <h:column>
+            <f:facet name="header">
+                id
+            </f:facet>
+            #{Darbuotojas.id}
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                vardas
+            </f:facet>
+            #{Darbuotojas.vardas}
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                pavarde
+            </f:facet>
+            #{Darbuotojas.pavarde}
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                padalinys
+            </f:facet>
+            #{Darbuotojas.padalinys.id}
+        </h:column>
+    </h:dataTable>
+</f:view>
+</html>
